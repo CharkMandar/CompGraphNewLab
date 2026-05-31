@@ -82,7 +82,7 @@ namespace CompGraphNewLab
             _stage4Duration = _liftHeight / _spiralDescentSpeed;
             _stage5Duration = _carouselRadius / _returnSpeed;
 
-            this.Text = "Механическая лабораторная: Транспортный аттракцион (3 источника света)";
+            this.Text = "Form 1";
             this.ClientSize = new Size(900, 700);
             this.StartPosition = FormStartPosition.CenterScreen;
 
@@ -119,7 +119,7 @@ namespace CompGraphNewLab
 
             // Кнопка "Авто"
             Button btnAuto = new Button();
-            btnAuto.Text = "▶ Продолжить";
+            btnAuto.Text = "Продолжить";
             btnAuto.Size = new Size(100, 35);
             btnAuto.Location = new Point(10, 5);
             btnAuto.BackColor = Color.FromArgb(60, 90, 60);
@@ -135,7 +135,7 @@ namespace CompGraphNewLab
 
             // Кнопка "Пауза"
             Button btnPause = new Button();
-            btnPause.Text = "⏸ ПАУЗА (случайно)";
+            btnPause.Text = "ПАУЗА";
             btnPause.Size = new Size(140, 35);
             btnPause.Location = new Point(120, 5);
             btnPause.BackColor = Color.FromArgb(90, 60, 60);
@@ -153,7 +153,7 @@ namespace CompGraphNewLab
 
             // Кнопка "Далее (1 этап)"
             Button btnNext = new Button();
-            btnNext.Text = "⏩ ДАЛЕЕ (1 этап)";
+            btnNext.Text = "ДАЛЕЕ (1 этап)";
             btnNext.Size = new Size(140, 35);
             btnNext.Location = new Point(270, 5);
             btnNext.BackColor = Color.FromArgb(60, 60, 90);
@@ -178,7 +178,7 @@ namespace CompGraphNewLab
 
             // Кнопка "Сброс"
             Button btnReset = new Button();
-            btnReset.Text = "⟳ СБРОС";
+            btnReset.Text = "СБРОС";
             btnReset.Size = new Size(90, 35);
             btnReset.Location = new Point(420, 5);
             btnReset.BackColor = Color.FromArgb(70, 70, 80);
