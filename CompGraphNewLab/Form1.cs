@@ -151,7 +151,7 @@ namespace CompGraphNewLab
                 }
             };
 
-            // Кнопка "Далее (1 этап)"
+            // Кнопка "Далее "
             Button btnNext = new Button();
             btnNext.Text = "ДАЛЕЕ (1 этап)";
             btnNext.Size = new Size(140, 35);
