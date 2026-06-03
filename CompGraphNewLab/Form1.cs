@@ -35,14 +35,14 @@ namespace CompGraphNewLab
 
         private DateTime _lastUpdateTime = DateTime.Now;
 
-        // --- ПЕРЕМЕННЫЕ ДЛЯ УПРАВЛЕНИЯ КАМЕРОЙ ---
+        // ПЕРЕМЕННЫЕ ДЛЯ УПРАВЛЕНИЯ КАМЕРОЙ
         private float _cameraDistance = 7.0f;
         private float _cameraAngleX = 30.0f;
         private float _cameraAngleY = 25.0f;
         private Point _lastMousePos;
         private bool _isMouseDragging = false;
 
-        // --- ПЕРЕМЕННЫЕ ДЛЯ УПРАВЛЕНИЯ АНИМАЦИЕЙ ---
+        // ПЕРЕМЕННЫЕ ДЛЯ УПРАВЛЕНИЯ АНИМАЦИЕЙ 
         private enum AnimationMode { Auto, Paused, Step }
         private AnimationMode _currentMode = AnimationMode.Auto;
         private bool _stepRequested = false;
@@ -50,7 +50,7 @@ namespace CompGraphNewLab
         private double _savedTime = 0;
         private bool _isPausedRandom = false;
 
-        // --- ПОЗИЦИИ И ЦВЕТА ИСТОЧНИКОВ СВЕТА ---
+        // ПОЗИЦИИ И ЦВЕТА ИСТОЧНИКОВ СВЕТА
         private float[][] _lightPositions = new float[][]
         {
             new float[] { 3.0f, 4.0f, 2.0f, 1.0f },  // Свет 1: справа-сверху (белый)
@@ -99,7 +99,7 @@ namespace CompGraphNewLab
 
             this.Controls.Add(_glControl);
 
-            // --- СОЗДАНИЕ КНОПОК УПРАВЛЕНИЯ ---
+            // СОЗДАНИЕ КНОПОК УПРАВЛЕНИЯ 
             CreateControlButtons();
 
             _animationTimer = new System.Windows.Forms.Timer();
@@ -514,9 +514,6 @@ namespace CompGraphNewLab
             _glControl.SwapBuffers();
         }
 
-        /// <summary>
-        /// Анимирует источники света для динамического эффекта
-        /// </summary>
         private void UpdateLightPositions()
         {
             float time = (float)_journeyTime;
@@ -560,14 +557,11 @@ namespace CompGraphNewLab
                 float x2 = radius * (float)Math.Cos(angle2);
                 float z2 = radius * (float)Math.Sin(angle2);
 
-                // UV-координаты: центр текстуры (0.5, 0.5) для центра диска
-                // края — по кругу
                 float u1 = 0.5f + 0.5f * (float)Math.Cos(angle1);
                 float v1 = 0.5f + 0.5f * (float)Math.Sin(angle1);
                 float u2 = 0.5f + 0.5f * (float)Math.Cos(angle2);
                 float v2 = 0.5f + 0.5f * (float)Math.Sin(angle2);
 
-                // Треугольник 1: центр → вершина1 → вершина2
                 GL.TexCoord2(0.5f, 0.5f); GL.Vertex3(0.0f, yPos, 0.0f);
                 GL.TexCoord2(u1, v1); GL.Vertex3(x1, yPos, z1);
                 GL.TexCoord2(u2, v2); GL.Vertex3(x2, yPos, z2);
@@ -575,7 +569,7 @@ namespace CompGraphNewLab
 
             GL.End();
 
-            // Ободок платформы (можно оставить без текстуры, просто цветной)
+            // Ободок платформы
             GL.Disable(EnableCap.Texture2D);
             GL.Color3(0.6f, 0.7f, 0.4f);
             GL.LineWidth(2.0f);
@@ -682,14 +676,14 @@ namespace CompGraphNewLab
         {
             // Привязываем текстуру коробки
             GL.BindTexture(TextureTarget.Texture2D, _boxTextureId);
-            GL.Color3(1.0f, 1.0f, 1.0f); // Белый цвет — текстура отображается полностью
+            GL.Color3(1.0f, 1.0f, 1.0f);
 
             float s = size;
 
             GL.Begin(PrimitiveType.Triangles);
 
             // === ПЕРЕДНЯЯ ГРАНЬ (Z = +s) ===
-            // Нижний левый угол текстуры (0,0) → нижний левый угол грани
+            // Нижний левый угол текстуры (0,0) 
             GL.TexCoord2(0, 0); GL.Vertex3(-s, -s, s);
             GL.TexCoord2(1, 0); GL.Vertex3(s, -s, s);
             GL.TexCoord2(1, 1); GL.Vertex3(s, s, s);
@@ -754,7 +748,7 @@ namespace CompGraphNewLab
 
             // Количество вершин: (сегментов * 3 вершины на треугольник)
             int vertexCount = segments * 3;
-            float[] vertices = new float[vertexCount * 3]; // x, y, z для каждой вершины
+            float[] vertices = new float[vertexCount * 3]; 
 
             for (int i = 0; i < segments; i++)
             {
@@ -767,7 +761,7 @@ namespace CompGraphNewLab
                 float z2 = radius * (float)Math.Sin(angle2);
 
                 // Треугольник (центр, вершина1, вершина2)
-                int idx = i * 9; // 9 координат на треугольник (3 вершины * 3 координаты)
+                int idx = i * 9;
                 vertices[idx + 0] = 0; vertices[idx + 1] = yPos; vertices[idx + 2] = 0;
                 vertices[idx + 3] = x1; vertices[idx + 4] = yPos; vertices[idx + 5] = z1;
                 vertices[idx + 6] = x2; vertices[idx + 7] = yPos; vertices[idx + 8] = z2;
@@ -791,9 +785,6 @@ namespace CompGraphNewLab
             this.ResumeLayout(false);
         }
 
-        /// <summary>
-        /// Загружает текстуру из файла и возвращает её ID
-        /// </summary>
         private int LoadTexture(string filePath)
         {
             // Проверяем, существует ли файл
@@ -831,10 +822,6 @@ namespace CompGraphNewLab
                 return textureId;
             }
         }
-
-        /// <summary>
-        /// Создаёт простую цветную шахматную текстуру (если нет файлов)
-        /// </summary>
         private int CreateProgrammaticTexture()
         {
             int size = 128;
@@ -845,22 +832,22 @@ namespace CompGraphNewLab
                 for (int x = 0; x < size; x++)
                 {
                     int index = (y * size + x) * 4;
-                    // Шахматный узор 8x8 клеток
+
                     bool isWhite = ((x / 16) + (y / 16)) % 2 == 0;
 
                     if (isWhite)
                     {
-                        pixels[index] = 200;     // B (синий)
-                        pixels[index + 1] = 180; // G (зелёный)
-                        pixels[index + 2] = 100; // R (красный)
+                        pixels[index] = 200;     
+                        pixels[index + 1] = 180; 
+                        pixels[index + 2] = 100; 
                     }
                     else
                     {
-                        pixels[index] = 100;     // B
-                        pixels[index + 1] = 80;  // G
-                        pixels[index + 2] = 40;  // R
+                        pixels[index] = 100;     
+                        pixels[index + 1] = 80;  
+                        pixels[index + 2] = 40;  
                     }
-                    pixels[index + 3] = 255;     // Alpha (непрозрачный)
+                    pixels[index + 3] = 255;     
                 }
             }
 
